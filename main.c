@@ -136,57 +136,32 @@ int main(int argc, char *argv[])
 			}
 		}
 	} else if (!strcmp(file, "tcam.json")) {
+		const char *list[] = {"key0", "key1", "msk0", "msk1", "rst0", "rst1"};
+		int n = sizeof(list) / sizeof(list[0]);
+		int j;
 		for (i = 0; i < 9; i++) {
 			snprintf(sval, sizeof(sval), "%d", i);
 			e = json_data_get_by_name(d, sval);
 			if (!e) {
 				printf("\"%s\": not found\n", sval);
 			} else {
+				printf("\"%s\":\n", sval);
 				if (e->type == OBJECT) {
-					p = json_data_get_by_name(e, "key0");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("key0: %"PRIu64"\n", val);
-					} else {
-						printf("key0 type is %d\n", p->type);
-					}
-					p = json_data_get_by_name(e, "key1");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("key1: %"PRIu64"\n", val);
-					} else {
-						printf("key1 type is %d\n", p->type);
-					}
-					p = json_data_get_by_name(e, "msk0");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("msk0: %"PRIu64"\n", val);
-					} else {
-						printf("msk0 type is %d\n", p->type);
-					}
-					p = json_data_get_by_name(e, "msk1");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("msk1: %"PRIu64"\n", val);
-					} else {
-						printf("msk1 type is %d\n", p->type);
-					}
-					p = json_data_get_by_name(e, "rst0");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("rst0: %"PRIu64"\n", val);
-					} else {
-						printf("rst0 type is %d\n", p->type);
-					}
-					p = json_data_get_by_name(e, "rst1");
-					if (p->type == MISC) {
-						if (!json_data_to_ulong(p, &val))
-							printf("rst1: %"PRIu64"\n", val);
-					} else {
-						printf("rst1 type is %d\n", p->type);
+					for (j = 0; j < n; j++) {
+						p = json_data_get_by_name(e, list[j]);
+						if (p) {
+							if (p->type == MISC) {
+								if (!json_data_to_ulong(p, &val))
+									printf("%s: %"PRIu64"\n", list[j], val);
+							} else {
+								printf("%s type is %d\n", list[j], p->type);
+							}
+						} else {
+							printf("\"%s\": not found\n", list[j]);
+						}
 					}
 				} else
-					printf("version type is %d\n", e->type);
+					printf("\"%s\" type is %d\n", sval, e->type);
 			}
 		}
 	}
