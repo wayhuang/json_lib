@@ -1,0 +1,24 @@
+{
+	"version": 1,
+	"flow_insert_without_rsp": 1,
+	"flow_hit_count_thread_en": 1,
+	"debug_rst": 0,
+	"debug_key": 0,
+	"queues_per_sp": 3,
+	"flow_match": [
+		{
+			"vlan_cfi_en": 0,
+			"qinq_cfi_en": 0,
+			"vxlan_flags_en": 0,
+			"ip_ttl_en": 1,
+			"tcp_flags_en": 0
+		},
+		{
+			"vlan_cfi_en": 1,
+			"qinq_cfi_en": 0,
+			"vxlan_flags_en": 1,
+			"ip_ttl_en": 0,
+			"tcp_flags_en": 0
+		}
+	]
+}
